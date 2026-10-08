@@ -1,6 +1,9 @@
 /** The largest n whose Fibonacci number stays below Number.MAX_SAFE_INTEGER. */
 export const MAX_FIBONACCI_INPUT = 78;
 
+/** The longest sequence fibonacciSequence builds (specs/004-fibonacci-sequence). */
+export const MAX_SEQUENCE_LENGTH = 10000;
+
 function assertNonNegativeInteger(name, n) {
   if (!Number.isInteger(n)) throw new TypeError(`${name} expects an integer, got ${String(n)}`);
   if (n < 0) throw new RangeError(`${name} expects n >= 0, got ${n}`);
@@ -33,4 +36,25 @@ export function fibonacciBig(n) {
   let current = 1n;
   for (let i = 0; i < n; i += 1) [previous, current] = [current, previous + current];
   return previous;
+}
+
+/**
+ * [F(0), ..., F(count - 1)] as bigints, built in one pass (specs/004-fibonacci-sequence).
+ * Every call builds and returns a new array.
+ * @param {number} count
+ * @returns {bigint[]}
+ */
+export function fibonacciSequence(count) {
+  assertNonNegativeInteger('fibonacciSequence', count);
+  if (count > MAX_SEQUENCE_LENGTH) {
+    throw new RangeError(`fibonacciSequence expects count <= ${MAX_SEQUENCE_LENGTH}, got ${count}`);
+  }
+  const sequence = [];
+  let previous = 0n;
+  let current = 1n;
+  for (let i = 0; i < count; i += 1) {
+    sequence.push(previous);
+    [previous, current] = [current, previous + current];
+  }
+  return sequence;
 }
