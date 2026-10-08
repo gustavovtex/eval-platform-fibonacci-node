@@ -13,8 +13,10 @@ A twin repository, `eval-platform-fibonacci-python`, has the same history in Pyt
 
 ```js
 import { factorial } from './src/factorial.js';
+import { fibonacci } from './src/fibonacci.js';
 
 factorial(5); // 120
+fibonacci(10); // 55
 ```
 
 ## Tests
@@ -32,3 +34,4 @@ Every change starts with a spec in `specs/NNN-name/spec.md`.
 | Spec | Feature |
 |---|---|
 | [001-factorial](specs/001-factorial/spec.md) | `factorial(n)` |
+| [002-fibonacci](specs/002-fibonacci/spec.md) | `fibonacci(n)` |
