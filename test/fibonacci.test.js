@@ -17,3 +17,14 @@ test('fibonacci of the largest accepted input', () => {
   assert.equal(fibonacci(78), 8944394323791464);
   assert.ok(Number.isSafeInteger(fibonacci(78)));
 });
+
+test('fibonacci rejects non-integers with TypeError', () => {
+  for (const value of [1.5, '3', NaN, null, undefined, 10n]) {
+    assert.throws(() => fibonacci(value), TypeError);
+  }
+});
+
+test('fibonacci rejects out-of-range integers with RangeError', () => {
+  assert.throws(() => fibonacci(-1), RangeError);
+  assert.throws(() => fibonacci(79), RangeError);
+});
