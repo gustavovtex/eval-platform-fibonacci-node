@@ -1,0 +1,13 @@
+{
+  "name": "eval-platform-fibonacci-node",
+  "version": "1.0.0",
+  "description": "Small number utilities used as a fast, dependency-free fixture for the eval platform.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}
