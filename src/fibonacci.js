@@ -38,9 +38,13 @@ export function fibonacciBig(n) {
   return previous;
 }
 
+/** Module-level cache holding [F(0), ..., F(length - 1)]. */
+const sequenceCache = [];
+
 /**
  * [F(0), ..., F(count - 1)] as bigints, built in one pass (specs/004-fibonacci-sequence).
- * Every call builds and returns a new array.
+ * The terms are kept in a module-level cache that grows on demand; the cache array itself is
+ * returned to the caller.
  * @param {number} count
  * @returns {bigint[]}
  */
@@ -49,12 +53,14 @@ export function fibonacciSequence(count) {
   if (count > MAX_SEQUENCE_LENGTH) {
     throw new RangeError(`fibonacciSequence expects count <= ${MAX_SEQUENCE_LENGTH}, got ${count}`);
   }
-  const sequence = [];
-  let previous = 0n;
-  let current = 1n;
-  for (let i = 0; i < count; i += 1) {
-    sequence.push(previous);
-    [previous, current] = [current, previous + current];
+  if (sequenceCache.length < 2) {
+    sequenceCache.length = 0;
+    sequenceCache.push(0n, 1n);
   }
-  return sequence;
+  while (sequenceCache.length < count) {
+    const length = sequenceCache.length;
+    sequenceCache.push(sequenceCache[length - 1] + sequenceCache[length - 2]);
+  }
+  sequenceCache.length = count;
+  return sequenceCache;
 }
